@@ -1,5 +1,5 @@
 const azureStorage = require('azure-storage');
-const STORAGE_BLOB_URI = 'https://funcsmsisa.blob.core.windows.net/' || process.env['STORAGE_BLOB_URI'];
+const STORAGE_BLOB_URI = process.env['STORAGE_BLOB_URI'];
 const msRestAzure = require('ms-rest-azure');
 
 // return the storage credentials

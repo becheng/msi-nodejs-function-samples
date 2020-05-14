@@ -1,15 +1,33 @@
-# Managed System Identity x Azure Functions x Node.js
+# Function App using Managed System Assigned Identity Samples
 
-Sample funcation apps using node.js accessing azure resources such as keyvalut and storage using a managed service identity.
+This document provides step by step instructions on configuring an Azure Function App to access Azure Key Valut and Azure Blob Storage using a Managed System Assigned Identity.  This Function App in this sample using Node.js but it's important to note the configuration to apply MSI is applicable regardless what code type is implemented in the Azure Function.  
 
-## Instructions
-1. Clone repo
-2. Run `npm install` on local directory 
-3. Create Azure Function App, e.g. 'MyMSIFunctionApp'
-4. Enable MSI on 'MyMSIFunctionApp'; Goto 'Platform features' > 'Identity' > set System Assigned to 'On' 
-5. Create Azure KeyVault, e.g. 'MyKeyVault' with a key/value entry with a secret key of 'MySecret'
-6. Add 'MyMSIFunctionApp' managed service idenity to the keyvault's Access Poliy and provide 'Get' access to Secrets 
-7. Create Azure Storage Account, e.g. 'mystorageacount'
-8. Add 'MyMSIFunctionApp' managed service idenity to 'mystorageacount'' as Role Assignment with the appropriate role, e.g. 'Storage Blob Data Reader'
-9. Update the function app code with the correct keyvault and storage urls
-10. Deploy to Azure function app and test
+## Getting started
+
+1. Clone repo.
+2. Goto the root folder of the repo and run `npm install`.  
+3. In the Azure Portal, create Azure Function App, e.g. "MyMSIFunctionApp".
+
+## Configure MSI to access Key Vault
+4. Enable a system assigned managed identity (MSI) on the Function App:   
+    -  If on a brand new Function App with no functions deployed yet, then go to the *Settings* (on the left nav), and select *Identity*
+    -  If on a existing Function App, go to *Platform features* > *Identity* 
+5. Under the *System Assigned* tab, set *Status* = **On** and click *Save*.
+6. In the Azure Portal, create Azure KeyVault, e.g. 'MyKeyVault' and generate a new *Secret* with a secret key of 'MySecret' and value of your chosing, e.g. "Hello World".
+7. Add the Functions App's MSI to the keyvault's access policy: 
+  i.  Go to *Access polices*, 
+  ii. Under *Secret permissions*, check the *Get* checkbox 
+  ii. Under *Select principal*, look up and the select the Function App MSI, e.g. "MyMSIFunctionApp".  
+  iii. Click Add.    
+
+## Configure MSI to access Storage Account (Blob in this case)
+8. Create Azure Storage Account, e.g. 'mystorageacount' or just use the storage account that was created for with the Function App for testing.
+9.  Within the Storage Account, 
+    i. Go to *Access control (IAM)*, 
+    ii. Select *Role assignments* tab, click *+ Add*, search for the Funcation App  MSI, e.g. "MyMSIFunctionApp", select *Role* as **Storage Blob Data Reader**. 
+    iii. Click Save
+
+## Update your Function App with the KeyValut and Storage URIs.
+10.  Update the function app code with the correct keyvault and storage urls.  If running functions locally, update the *.env* file.  If running in Azure, update the Function App's app settings with the following keys, KEY_VAULT_URI, STORAGE_BLOB_URI.
+
+11. Deploy to the Function App and test!
