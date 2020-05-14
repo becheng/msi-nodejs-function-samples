@@ -7,12 +7,12 @@ This document provides step by step instructions on configuring an Azure Functio
 1. Clone repo.
 2. Goto the root folder of the repo and run `npm install`.  
 3. In the Azure Portal, create Azure Function App, e.g. "MyMSIFunctionApp".
-
-## Configure MSI to access Key Vault
 4. Enable a system assigned managed identity (MSI) on the Function App:   
-    -  If on a brand new Function App with no functions deployed yet, then go to the *Settings* (on the left nav), and select *Identity*
+    -  If on a brand new Function App with no functions deployed yet, go to the *Settings* (on the left nav), and select *Identity*
     -  If on a existing Function App, go to *Platform features* > *Identity* 
 5. Under the *System Assigned* tab, set *Status* = **On** and click *Save*.
+
+## Configure MSI to access Key Vault
 6. In the Azure Portal, create Azure KeyVault, e.g. 'MyKeyVault' and generate a new *Secret* with a secret key of 'MySecret' and value of your chosing, e.g. "Hello World".
 7. Add the Functions App's MSI to the keyvault's access policy: 
   i.  Go to *Access polices*, 
