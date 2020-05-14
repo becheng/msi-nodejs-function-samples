@@ -15,17 +15,17 @@ This document provides step by step instructions on configuring an Azure Functio
 ## Configure MSI to access Key Vault
 6. In the Azure Portal, create Azure KeyVault, e.g. 'MyKeyVault' and generate a new *Secret* with a secret key of 'MySecret' and value of your chosing, e.g. "Hello World".
 7. Add the Functions App's MSI to the keyvault's access policy: 
-  i.  Go to *Access polices*, 
-  ii. Under *Secret permissions*, check the *Get* checkbox 
-  ii. Under *Select principal*, look up and the select the Function App MSI, e.g. "MyMSIFunctionApp".  
-  iii. Click Add.    
+   - Go to *Access polices*, 
+   - Under *Secret permissions*, check the *Get* checkbox 
+   - Under *Select principal*, look up and the select the Function App MSI, e.g. "MyMSIFunctionApp".  
+   - Click Add.    
 
 ## Configure MSI to access Storage Account (Blob in this case)
 8. Create Azure Storage Account, e.g. 'mystorageacount' or just use the storage account that was created for with the Function App for testing.
 9.  Within the Storage Account, 
-    i. Go to *Access control (IAM)*, 
-    ii. Select *Role assignments* tab, click *+ Add*, search for the Funcation App  MSI, e.g. "MyMSIFunctionApp", select *Role* as **Storage Blob Data Reader**. 
-    iii. Click Save
+    - Go to *Access control (IAM)*, 
+    - Select *Role assignments* tab, click *+ Add*, search for the Funcation App  MSI, e.g. "MyMSIFunctionApp", select *Role* as **Storage Blob Data Reader**. 
+    - Click Save
 
 ## Update your Function App with the KeyValut and Storage URIs.
 10.  Update the function app code with the correct keyvault and storage urls.  If running functions locally, update the *.env* file.  If running in Azure, update the Function App's app settings with the following keys, KEY_VAULT_URI, STORAGE_BLOB_URI.
